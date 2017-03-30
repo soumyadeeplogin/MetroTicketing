@@ -17,9 +17,10 @@ public class XingStation extends Stations{
 	
 	@Override
 	public void setXattribute() {
-		connector = PropertyHelper.getConnection(code);
+		//connector = PropertyHelper.getConnection(code);
 	}
 	
+	@Override
 	public List<String> findXstation() {
 		return connector;
 	}

@@ -5,20 +5,50 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Properties;
+import java.util.StringTokenizer;
 
 public class PropertyHelper {
+	
+	final static String StationName = "StationNames.properties";
+	final static String ConnectorMap = "connectors.properties";
+	
 	public static String getStationName(String code)
 	{
-		return null;
-	}
-
-	public static List<String> getConnection(String code) 
-	{
-		
-		return null;
+		return readProp(StationName, code);
 	}
 	
-	public String readProp(String filename, String key)
+	public static String resolveLine(char Line)
+	{
+		switch (Line){
+			case 'A':
+				return "L1";
+			case 'B':
+				return "L2";
+			case 'C':
+				return "L3";
+			default :
+				return null;
+		}
+	}
+
+	public static String getConnection(char LineI, char LineII) 
+	{
+		String Lines = "";
+		Lines = resolveLine(LineI)+"&"+resolveLine(LineII);		
+		return readProp(ConnectorMap, Lines);
+	}
+	
+	public static List<String> getSeduName(String code) 
+	{
+		List<String> sedu = null;
+		String connects = readProp(ConnectorMap, code);
+		StringTokenizer st = new StringTokenizer(connects,"&");
+		sedu.add(0, st.nextToken());
+		sedu.add(1, st.nextToken());
+		return sedu;
+	}
+	
+	private static String readProp(String filename, String key)
 	{
 		String value = null;
 		Properties prop = new Properties();

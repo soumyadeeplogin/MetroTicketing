@@ -54,5 +54,11 @@ public class Stations implements StationsI{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public List<String> findXstation() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 		
 }
