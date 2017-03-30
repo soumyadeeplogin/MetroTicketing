@@ -9,8 +9,7 @@ public class Stations implements Staions{
 
 	String code = null;
 	String stationName = null;
-	boolean isX = false;
-	List<String> connector; 
+	
 	//String[] connectingX = {null,null};
 	
 	public Stations(String code) {
@@ -37,28 +36,23 @@ public class Stations implements Staions{
 	public char getStaionLine() {
 		return code.charAt(0);
 	}
-	
+
 	@Override
 	public void setXattribute() {
-		connector = PropertyHelper.getConnection(code);
+		// TODO Auto-generated method stub
+		
 	}
-	
-	public List<String> findXstation() {
-		return connector;
-	}
-	
+
 	@Override
 	public void setInterChangeStaion() {
-		isX = (code.charAt(0)=='X')?true:false;	
-		if(isX) {
-			setXattribute();
-		}
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public boolean isInterchangeStation() {
-		return isX;
+		// TODO Auto-generated method stub
+		return false;
 	}
-	
-	
+		
 }
