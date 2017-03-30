@@ -7,7 +7,7 @@ import com.metro.utils.PropertyHelper;
 
 public class Station implements StationI{
 
-	 
+	 String test = "Just for testing";
 	String code = null;
 	String stationName = null;
 	
