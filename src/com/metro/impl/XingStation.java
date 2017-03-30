@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.metro.utils.PropertyHelper;
 
-public class XingStation extends Stations{
+public class XingStation extends Station{
 
 	public XingStation(String code) {
 		super(code);

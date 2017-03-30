@@ -9,7 +9,7 @@ import java.util.List;
  * @author Soumyadeep
  *
  */
-public interface StationsI {
+public interface StationI {
 	
 	public void setStationName();
 	public String getStationName();

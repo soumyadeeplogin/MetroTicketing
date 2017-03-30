@@ -3,24 +3,24 @@ package com.metro.main;
 import java.util.List;
 import java.util.Scanner;
 
-import com.metro.impl.Stations;
+import com.metro.impl.Station;
 import com.metro.impl.XingStation;
-import com.metro.interfacer.StationsI;
+import com.metro.interfacer.StationI;
 import com.metro.utils.PropertyHelper;
 
 public class Flow {
 	
-	StationsI source;
-	StationsI destination;
+	StationI source;
+	StationI destination;
 	int distance = 0;
 	public Flow()
 	{
 		this.source = getStation("Source");
 		this.destination = getStation("Destination");
 	}
-	public StationsI getStation(String type)
+	public StationI getStation(String type)
 	{
-		StationsI si;
+		StationI si;
 		String code = null;
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter "+ type +" Station Code:");
@@ -29,7 +29,7 @@ public class Flow {
 		if(code.charAt(0) == 'X')
 			si = new XingStation(code);
 		else 
-			si = new Stations(code);
+			si = new Station(code);
 		
 		return si;	
 	}
@@ -57,18 +57,18 @@ public class Flow {
 				viaResolvedDes= viaResolvedNames.get(1);
 				viaResolvedSrc= viaResolvedNames.get(0);
 			}
-			StationsI vrd = new Stations(viaResolvedDes);
-			StationsI vrs = new Stations(viaResolvedSrc);
+			StationI vrd = new Station(viaResolvedDes);
+			StationI vrs = new Station(viaResolvedSrc);
 			distance += getDistance(source, vrd);
 			distance +=getDistance(vrs, destination);
 			
 		}
 	}
-	public int getDistance(StationsI source, StationsI destination)
+	public int getDistance(StationI source, StationI destination)
 	{
 		return 0;
 	}
-	public double cost(Stations source, Stations destination)
+	public double cost(Station source, Station destination)
 	{
 		double cost = 0;
 		

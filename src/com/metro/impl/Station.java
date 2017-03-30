@@ -2,17 +2,17 @@ package com.metro.impl;
 
 import java.util.List;
 
-import com.metro.interfacer.StationsI;
+import com.metro.interfacer.StationI;
 import com.metro.utils.PropertyHelper;
 
-public class Stations implements StationsI{
+public class Station implements StationI{
 
 	String code = null;
 	String stationName = null;
 	
 	//String[] connectingX = {null,null};
 	
-	public Stations(String code) {
+	public Station(String code) {
 		this.code = code;
 		setStationName();
 	}
