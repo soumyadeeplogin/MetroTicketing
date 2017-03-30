@@ -7,7 +7,7 @@ package com.metro.interfacer;
  * @author Soumyadeep
  *
  */
-public interface Staions {
+public interface StationsI {
 	
 	void setStationName();
 	String getStationName();

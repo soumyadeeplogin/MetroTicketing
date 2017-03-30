@@ -8,7 +8,8 @@ public class XingStation extends Stations{
 
 	public XingStation(String code) {
 		super(code);
-		// TODO Auto-generated constructor stub
+		setXattribute();
+		setInterChangeStaion();
 	}
 	
 	boolean isX = false;

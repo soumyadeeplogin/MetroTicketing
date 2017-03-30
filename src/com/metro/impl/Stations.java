@@ -2,10 +2,10 @@ package com.metro.impl;
 
 import java.util.List;
 
-import com.metro.interfacer.Staions;
+import com.metro.interfacer.StationsI;
 import com.metro.utils.PropertyHelper;
 
-public class Stations implements Staions{
+public class Stations implements StationsI{
 
 	String code = null;
 	String stationName = null;
