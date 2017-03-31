@@ -34,7 +34,7 @@ public class Station implements StationI{
 	}
 
 	@Override
-	public char getStaionLine() {
+	public char getStationLine() {
 		return code.charAt(0);
 	}
 

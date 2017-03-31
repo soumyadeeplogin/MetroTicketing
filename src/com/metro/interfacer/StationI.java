@@ -13,7 +13,7 @@ public interface StationI {
 	
 	public void setStationName();
 	public String getStationName();
-	public char getStaionLine();
+	public char getStationLine();
 	public String getStationCode();
 	public void setInterChangeStaion();
 	public boolean isInterchangeStation();

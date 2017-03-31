@@ -54,7 +54,7 @@ public class Flow {
 	public void totalDistanceAndCost()
 	{
 		//Case Same Line
-		if((source.getStaionLine()==destination.getStaionLine()) && ((source.getStaionLine()!='X') || (destination.getStaionLine()!='X')))
+		if((source.getStationLine()==destination.getStationLine()) && ((source.getStationLine()!='X') || (destination.getStationLine()!='X')))
 		{
 			distance += getDistance(source, destination);
 			if(distance>3){
@@ -64,12 +64,12 @@ public class Flow {
 			}
 		}
 		//Case Different Line
-		else if((source.getStaionLine()!='X') && (destination.getStaionLine()!='X'))
+		else if((source.getStationLine()!='X') && (destination.getStationLine()!='X'))
 		{
 			crossInterchange(source, destination);
 		}
 		//Case Line to X
-		else if(((source.getStaionLine()!='X') && (destination.getStaionLine()=='X')) || ((source.getStaionLine()=='X') && (destination.getStaionLine()!='X')))
+		else if(((source.getStationLine()!='X') && (destination.getStationLine()=='X')) || ((source.getStationLine()=='X') && (destination.getStationLine()!='X')))
 		{
 			
 			StationI X = null;
@@ -85,9 +85,9 @@ public class Flow {
 				nonX = source;
 			}
 			
-			if((X.getSudoName(0).getStaionLine()==nonX.getStaionLine()) || (X.getSudoName(1).getStaionLine()==nonX.getStaionLine()))
+			if((X.getSudoName(0).getStationLine()==nonX.getStationLine()) || (X.getSudoName(1).getStationLine()==nonX.getStationLine()))
 			{
-				StationI xDest = ((X.getSudoName(0).getStaionLine()==nonX.getStaionLine())?X.getSudoName(0):X.getSudoName(1));
+				StationI xDest = ((X.getSudoName(0).getStationLine()==nonX.getStationLine())?X.getSudoName(0):X.getSudoName(1));
 				distance += getDistance(nonX, xDest);
 				if(distance>3){
 					cost += calCost(nonX, distance-3);
@@ -98,14 +98,36 @@ public class Flow {
 			} 
 			else
 			{
-				StationI xDest = ((X.getSudoName(0).getStaionLine()==nonX.getStaionLine())?X.getSudoName(0):X.getSudoName(1));
+				StationI xDest = ((X.getSudoName(0).getStationLine()==nonX.getStationLine())?X.getSudoName(0):X.getSudoName(1));
 				crossInterchange(source, xDest);
 			}
 			
 			
 			
-		} else if((source.getStaionLine()=='X') && (destination.getStaionLine()!='X')) {
-						
+		} else if((source.getStationLine()=='X') && (destination.getStationLine()=='X')) {
+			StationI src = null;
+			StationI dst = null;
+			if(source.getSudoName(0).getStationLine()==destination.getSudoName(0).getStationLine()){
+				src = source.getSudoName(0);
+				dst = destination.getSudoName(0);
+			} else if(source.getSudoName(0).getStationLine()==destination.getSudoName(1).getStationLine()){
+				src = source.getSudoName(0);
+				dst = destination.getSudoName(1);
+			} else if(source.getSudoName(1).getStationLine()==destination.getSudoName(0).getStationLine()){
+				src = source.getSudoName(1);
+				dst = destination.getSudoName(0);
+			} else if(source.getSudoName(1).getStationLine()==destination.getSudoName(1).getStationLine()){
+				src = source.getSudoName(1);
+				dst = destination.getSudoName(1);
+			}
+			
+			distance += getDistance(src, dst);
+			if(distance>3){
+				cost += calCost(src, distance-3);
+			} else {
+				cost = 10;
+			}
+			
 		} else {
 			System.out.println("Critical Case");
 		}
@@ -113,11 +135,11 @@ public class Flow {
 	
 	public void crossInterchange(StationI source, StationI destination) {
 		
-		String via = PropertyHelper.getConnection(source.getStaionLine(), destination.getStaionLine());
+		String via = PropertyHelper.getConnection(source.getStationLine(), destination.getStationLine());
 		List<String> viaResolvedNames = PropertyHelper.getSudoName(via);
 		String viaResolvedDes = "";
 		String viaResolvedSrc = "";
-		if(viaResolvedNames.get(0).indexOf(source.getStaionLine())==0)
+		if(viaResolvedNames.get(0).indexOf(source.getStationLine())==0)
 		{
 			viaResolvedDes= viaResolvedNames.get(0);
 			viaResolvedSrc= viaResolvedNames.get(1);
@@ -169,7 +191,7 @@ public class Flow {
 	}
 	public double calCost(StationI source, int distance)
 	{
-		switch (source.getStaionLine())
+		switch (source.getStationLine())
 		{
 		case 'A':
 			return distance*2.5;
