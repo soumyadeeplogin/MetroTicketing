@@ -7,9 +7,9 @@ import com.metro.utils.PropertyHelper;
 
 public class Station implements StationI{
 
-	 String test = "Just for testing";
 	String code = null;
 	String stationName = null;
+	boolean isX = false;
 	
 	//String[] connectingX = {null,null};
 	
@@ -39,25 +39,26 @@ public class Station implements StationI{
 	}
 
 	@Override
-	public void setXattribute() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void setInterChangeStaion() {
-		// TODO Auto-generated method stub
-		
+		isX = (code.charAt(0)=='X')?true:false;	
+		if(isX) {
+			setSudoName();
+		}
 	}
 
 	@Override
 	public boolean isInterchangeStation() {
-		// TODO Auto-generated method stub
-		return false;
+		return isX;
 	}
 
 	@Override
-	public List<String> findXstation() {
+	public void setSudoName() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public StationI getSudoName(int index) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -15,9 +15,9 @@ public interface StationI {
 	public String getStationName();
 	public char getStaionLine();
 	public String getStationCode();
-	public void setXattribute();
 	public void setInterChangeStaion();
 	public boolean isInterchangeStation();
-	public List<String> findXstation();
+	public void setSudoName();
+	public StationI getSudoName(int index);
 		
 }

@@ -3,6 +3,7 @@ package com.metro.utils;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.StringTokenizer;
@@ -40,7 +41,7 @@ public class PropertyHelper {
 	
 	public static List<String> getSeduName(String code) 
 	{
-		List<String> sedu = null;
+		List<String> sedu = new ArrayList<String>();
 		String connects = readProp(ConnectorMap, code);
 		StringTokenizer st = new StringTokenizer(connects,"&");
 		sedu.add(0, st.nextToken());
@@ -65,15 +66,15 @@ public class PropertyHelper {
 			//ex.printStackTrace();
 			
 		}
-		finally {
+		/*finally {
 			if (input != null) {
 				try {
-					input.close();
+					//input.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
-		}
+		}*/
 		return value;
 	}
 }
