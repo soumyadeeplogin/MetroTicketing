@@ -34,9 +34,10 @@ public class PropertyHelper {
 
 	public static String getConnection(char LineI, char LineII) 
 	{
-		String Lines = "";
-		Lines = resolveLine(LineI)+"&"+resolveLine(LineII);		
-		return readProp(ConnectorMap, Lines);
+		//String Lines = "";
+		String LineA = resolveLine(LineI)+"&"+resolveLine(LineII);	
+		String LineB = resolveLine(LineII)+"&"+resolveLine(LineI);
+		return (readProp(ConnectorMap, LineA)!=null)?readProp(ConnectorMap, LineA):readProp(ConnectorMap, LineB);
 	}
 	
 	public static List<String> getSudoName(String code) 

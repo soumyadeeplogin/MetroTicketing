@@ -53,15 +53,22 @@ public class Flow {
 	}
 	public void totalDistanceAndCost()
 	{
+		//Case Same Line
 		if((source.getStaionLine()==destination.getStaionLine()) && ((source.getStaionLine()!='X') || (destination.getStaionLine()!='X')))
 		{
 			distance += getDistance(source, destination);
-			cost += calCost(source, distance-3);
+			if(distance>3){
+				cost += calCost(source, distance-3);
+			} else {
+				cost = 10;
+			}
 		}
+		//Case Different Line
 		else if((source.getStaionLine()!='X') && (destination.getStaionLine()!='X'))
 		{
 			crossInterchange(source, destination);
 		}
+		//Case Line to X
 		else if(((source.getStaionLine()!='X') && (destination.getStaionLine()=='X')) || ((source.getStaionLine()=='X') && (destination.getStaionLine()!='X')))
 		{
 			
@@ -82,7 +89,12 @@ public class Flow {
 			{
 				StationI xDest = ((X.getSudoName(0).getStaionLine()==nonX.getStaionLine())?X.getSudoName(0):X.getSudoName(1));
 				distance += getDistance(nonX, xDest);
-				cost += calCost(nonX, distance-3);
+				if(distance>3){
+					cost += calCost(nonX, distance-3);
+				}
+				else {
+					cost = 10;
+				}
 			} 
 			else
 			{
@@ -93,13 +105,10 @@ public class Flow {
 			
 			
 		} else if((source.getStaionLine()=='X') && (destination.getStaionLine()!='X')) {
-			
+						
 		} else {
 			System.out.println("Critical Case");
 		}
-		
-		//AtoX
-		//XtoX
 	}
 	
 	public void crossInterchange(StationI source, StationI destination) {
@@ -121,9 +130,35 @@ public class Flow {
 		int tempDistance =0;
 		distance += getDistance(source, vrd);
 		tempDistance = distance;
-		cost += calCost(source, distance-3);
-		distance +=getDistance(vrs, destination);
-		cost += calCost(vrs, distance-tempDistance);
+		switch(distance){
+		case 1:
+			//cost += calCost(source, distance-3);
+			distance +=getDistance(vrs, destination);
+			if((distance-tempDistance)>2)
+				cost += calCost(vrs, (distance-tempDistance-2));
+			else 
+				cost = 10;
+			break;
+		case 2:
+			distance +=getDistance(vrs, destination);
+			if((distance-tempDistance)>1)
+				cost += calCost(vrs, (distance-tempDistance-1));
+			else 
+				cost = 10;
+			break;
+		case 3:
+			distance +=getDistance(vrs, destination);
+			if((distance-tempDistance)>0)
+				cost += calCost(vrs, (distance-tempDistance-0));
+			else 
+				cost = 10;
+			break;
+		default:
+			cost += calCost(source, distance-3);
+			distance +=getDistance(vrs, destination);
+			cost += calCost(vrs, distance-tempDistance);
+		}
+		
 		
 	}
 	public int getDistance(StationI source, StationI destination)
