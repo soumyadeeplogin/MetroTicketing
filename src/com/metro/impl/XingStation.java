@@ -31,7 +31,7 @@ public class XingStation extends Station{
 	
 	@Override
 	public void setSudoName() {
-		List<String> names = PropertyHelper.getSeduName(code);
+		List<String> names = PropertyHelper.getSudoName(code);
 		StationI seduOne = new Station(names.get(0));
 		StationI seduTwo = new Station(names.get(1));
 		sudoName.add(seduOne);

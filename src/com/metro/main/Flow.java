@@ -53,43 +53,21 @@ public class Flow {
 	}
 	public void totalDistanceAndCost()
 	{
-		if((source.getStaionLine()==destination.getStaionLine()) && 
-				((source.getStaionLine()!='X') || (destination.getStaionLine()!='X')))
+		if((source.getStaionLine()==destination.getStaionLine()) && ((source.getStaionLine()!='X') || (destination.getStaionLine()!='X')))
 		{
 			distance += getDistance(source, destination);
 			cost += calCost(source, distance-3);
 		}
-		else if((source.getStaionLine()!='X') || (destination.getStaionLine()!='X'))
+		else if((source.getStaionLine()!='X') && (destination.getStaionLine()!='X'))
 		{
-			//A to B = X2
-			//A to C = X1
-			//B to C = X3
-			String via = PropertyHelper.getConnection(source.getStaionLine(), destination.getStaionLine());
-			List<String> viaResolvedNames = PropertyHelper.getSeduName(via);
-			String viaResolvedDes = "";
-			String viaResolvedSrc = "";
-			if(viaResolvedNames.get(0).indexOf(source.getStaionLine())==0)
-			{
-				viaResolvedDes= viaResolvedNames.get(0);
-				viaResolvedSrc= viaResolvedNames.get(1);
-			} else {
-				viaResolvedDes= viaResolvedNames.get(1);
-				viaResolvedSrc= viaResolvedNames.get(0);
-			}
-			StationI vrd = new Station(viaResolvedDes);
-			StationI vrs = new Station(viaResolvedSrc);
-			int tempDistance =0;
-			distance += getDistance(source, vrd);
-			tempDistance = distance;
-			cost += calCost(source, distance-3);
-			distance +=getDistance(vrs, destination);
-			cost += calCost(vrs, distance-tempDistance);
+			crossInterchange(source, destination);
 		}
-		else if(((source.getStaionLine()!='X') && (destination.getStaionLine()=='X')) ||
-				
-				((source.getStaionLine()=='X') && (destination.getStaionLine()!='X'))){
+		else if(((source.getStaionLine()!='X') && (destination.getStaionLine()=='X')) || ((source.getStaionLine()=='X') && (destination.getStaionLine()!='X')))
+		{
+			
 			StationI X = null;
 			StationI nonX = null;
+			
 			if(source.isInterchangeStation()){
 				//source is X
 				X = source;
@@ -100,8 +78,17 @@ public class Flow {
 				nonX = source;
 			}
 			
-			boolean directToX = false;
-			
+			if((X.getSudoName(0).getStaionLine()==nonX.getStaionLine()) || (X.getSudoName(1).getStaionLine()==nonX.getStaionLine()))
+			{
+				StationI xDest = ((X.getSudoName(0).getStaionLine()==nonX.getStaionLine())?X.getSudoName(0):X.getSudoName(1));
+				distance += getDistance(nonX, xDest);
+				cost += calCost(nonX, distance-3);
+			} 
+			else
+			{
+				StationI xDest = ((X.getSudoName(0).getStaionLine()==nonX.getStaionLine())?X.getSudoName(0):X.getSudoName(1));
+				crossInterchange(source, xDest);
+			}
 			
 			
 			
@@ -113,6 +100,31 @@ public class Flow {
 		
 		//AtoX
 		//XtoX
+	}
+	
+	public void crossInterchange(StationI source, StationI destination) {
+		
+		String via = PropertyHelper.getConnection(source.getStaionLine(), destination.getStaionLine());
+		List<String> viaResolvedNames = PropertyHelper.getSudoName(via);
+		String viaResolvedDes = "";
+		String viaResolvedSrc = "";
+		if(viaResolvedNames.get(0).indexOf(source.getStaionLine())==0)
+		{
+			viaResolvedDes= viaResolvedNames.get(0);
+			viaResolvedSrc= viaResolvedNames.get(1);
+		} else {
+			viaResolvedDes= viaResolvedNames.get(1);
+			viaResolvedSrc= viaResolvedNames.get(0);
+		}
+		StationI vrd = new Station(viaResolvedDes);
+		StationI vrs = new Station(viaResolvedSrc);
+		int tempDistance =0;
+		distance += getDistance(source, vrd);
+		tempDistance = distance;
+		cost += calCost(source, distance-3);
+		distance +=getDistance(vrs, destination);
+		cost += calCost(vrs, distance-tempDistance);
+		
 	}
 	public int getDistance(StationI source, StationI destination)
 	{
@@ -128,7 +140,7 @@ public class Flow {
 			return distance*2.5;
 		case 'B':
 			return distance*2.0;
-		case 'c':
+		case 'C':
 			return distance*3.0;
 		default:
 			return 0.0;

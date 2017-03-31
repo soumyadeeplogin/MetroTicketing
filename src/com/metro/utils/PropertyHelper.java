@@ -39,14 +39,16 @@ public class PropertyHelper {
 		return readProp(ConnectorMap, Lines);
 	}
 	
-	public static List<String> getSeduName(String code) 
+	public static List<String> getSudoName(String code) 
 	{
-		List<String> sedu = new ArrayList<String>();
+		List<String> sudo = new ArrayList<String>();
 		String connects = readProp(ConnectorMap, code);
 		StringTokenizer st = new StringTokenizer(connects,"&");
-		sedu.add(0, st.nextToken());
-		sedu.add(1, st.nextToken());
-		return sedu;
+		while(st.hasMoreTokens()) {
+			sudo.add(0, st.nextToken());
+			sudo.add(1, st.nextToken());
+		}
+		return sudo;
 	}
 	
 	private static String readProp(String filename, String key)
