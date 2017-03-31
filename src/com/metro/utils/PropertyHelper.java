@@ -69,11 +69,11 @@ public class PropertyHelper {
 			input = new FileInputStream(filename);
 			prop.load(input);
 			value = prop.getProperty(key);
-			if(value.equals("(undefined)"))
-			{
-				System.out.println("(undefined) - Please define the station name");
-				System.exit(0);
-			}
+//			if(value.equals("(undefined)"))
+//			{
+//				System.out.println("(undefined) - Please define the station name");
+//				System.exit(0);
+//			}
 		}  catch (IOException ex) {
 			//ex.printStackTrace();
 			System.out.println("(uninitialized) - Please initialize the properties file");

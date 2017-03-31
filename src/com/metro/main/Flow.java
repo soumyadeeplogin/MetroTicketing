@@ -1,5 +1,6 @@
 package com.metro.main;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,8 +19,34 @@ public class Flow {
 
 	public Flow() {
 		this.source = getStation("Source");
-		this.destination = getStation("Destination");
+
 		// sc.close();
+		if (this.source.getStationName().equals("undefined")) {
+			System.out.println("Undefined station " + this.source.getStationCode());
+			System.exit(0);
+		} else {
+			this.destination = getStation("Destination");
+			if (this.destination.getStationName().equals("undefined")) {
+				System.out.println("Undefined station " + this.destination.getStationCode());
+				System.exit(0);
+			}
+
+		}
+		cc = new CalculateCost();
+		compute();
+	}
+
+	public Flow(String source, String destination) {
+
+		if (source.charAt(0) == 'X')
+			this.source = new XingStation(source);
+		else
+			this.source = new Station(source);
+
+		if (destination.charAt(0) == 'X')
+			this.destination = new XingStation(destination);
+		else
+			this.destination = new Station(destination);
 		cc = new CalculateCost();
 		compute();
 	}
@@ -27,10 +54,10 @@ public class Flow {
 	public void compute() {
 		totalDistanceAndCost();
 		new Printer().printTicker(source.getStationName(), destination.getStationName(), String.valueOf(distance),
-				Double.toString(cost));
+				new DecimalFormat("##.00").format(cost));
 	}
 
-	final private static StationI getStation(String type) {
+	public StationI getStation(String type) {
 		StationI si;
 		String code = null;
 		System.out.println("Enter " + type + " Station Code:");
@@ -40,19 +67,17 @@ public class Flow {
 		if (sc.hasNext()) {
 			code = sc.next();
 		}
-		if(!code.matches("^[A-Z]{1}\\d{2}") && !code.matches("^[A-Z]{1}\\d{1}"))
-		{
+		if (!code.matches("^[A-Z]{1}\\d{2}") && !code.matches("^[A-Z]{1}\\d{1}")) {
 			System.out.println("Invalid input");
 			System.exit(0);
-		} 
-		/*if(code.length()==2){
-			
-		} else if(code.length()==3) {
-			
-		} else {
-			System.out.println("Invalid input");
-			System.exit(0);
-		}*/
+		}
+		/*
+		 * if(code.length()==2){
+		 * 
+		 * } else if(code.length()==3) {
+		 * 
+		 * } else { System.out.println("Invalid input"); System.exit(0); }
+		 */
 		if (code.charAt(0) == 'X')
 			si = new XingStation(code);
 		else
