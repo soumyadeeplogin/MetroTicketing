@@ -11,8 +11,6 @@ public class Station implements StationI{
 	String stationName = null;
 	boolean isX = false;
 	
-	//String[] connectingX = {null,null};
-	
 	public Station(String code) {
 		this.code = code;
 		setStationName();

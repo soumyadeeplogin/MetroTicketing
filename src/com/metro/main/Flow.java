@@ -53,25 +53,45 @@ public class Flow {
 
 		return si;	
 	}
+	
+	public int lineChecker()
+	{
+		//Line same but not Xing
+		if((source.getStationLine()==destination.getStationLine()) 
+				&& ((source.getStationLine()!='X') || (destination.getStationLine()!='X')))
+		{
+			return 1;
+		} 
+		//Line different not Xing
+		else if((source.getStationLine()!='X') && (destination.getStationLine()!='X'))
+		{
+			return 2;
+		} 
+		//Line to Xing
+		else if(((source.getStationLine()!='X') && (destination.getStationLine()=='X')) 
+				|| ((source.getStationLine()=='X') && (destination.getStationLine()!='X')))
+		{
+			return 3;
+		}
+		//Xing to Xing
+		else if((source.getStationLine()=='X') && (destination.getStationLine()=='X')) 
+		{
+			return 4;
+		}
+		else 
+			return 5;
+	}
 	public void totalDistanceAndCost()
 	{
-		//Case Same Line
-		if((source.getStationLine()==destination.getStationLine()) && ((source.getStationLine()!='X') || (destination.getStationLine()!='X')))
+		if(lineChecker()==1)
 		{
-			distance += getDistance(source, destination);
-			if(distance>3){
-				cost += cc.calCost(source, distance-3);
-			} else {
-				cost = 10;
-			}
+			sameLineTravel(this.source,this.destination);
 		}
-		//Case Different Line
-		else if((source.getStationLine()!='X') && (destination.getStationLine()!='X'))
+		else if(lineChecker()==2)
 		{
 			crossInterchange(source, destination);
 		}
-		//Case Line to X
-		else if(((source.getStationLine()!='X') && (destination.getStationLine()=='X')) || ((source.getStationLine()=='X') && (destination.getStationLine()!='X')))
+		else if(lineChecker()==3)
 		{
 			
 			StationI X = null;
@@ -102,11 +122,9 @@ public class Flow {
 			{
 				StationI xDest = ((X.getSudoName(0).getStationLine()==nonX.getStationLine())?X.getSudoName(0):X.getSudoName(1));
 				crossInterchange(source, xDest);
-			}
-			
-			
-			
-		} else if((source.getStationLine()=='X') && (destination.getStationLine()=='X')) {
+			}			
+		} 
+		else if(lineChecker()==4) {
 			StationI src = null;
 			StationI dst = null;
 			if(source.getSudoName(0).getStationLine()==destination.getSudoName(0).getStationLine()){
@@ -122,16 +140,20 @@ public class Flow {
 				src = source.getSudoName(1);
 				dst = destination.getSudoName(1);
 			}
-			
-			distance += getDistance(src, dst);
-			if(distance>3){
-				cost += cc.calCost(src, distance-3);
-			} else {
-				cost = 10;
-			}
+
+			sameLineTravel(src,dst);
 			
 		} else {
 			System.out.println("Critical Case");
+		}
+	}
+	
+	public void sameLineTravel(StationI source, StationI destination) {
+		distance += getDistance(source, destination);
+		if(distance>3){
+			cost += cc.calCost(source, distance-3);
+		} else {
+			cost = 10;
 		}
 	}
 	
