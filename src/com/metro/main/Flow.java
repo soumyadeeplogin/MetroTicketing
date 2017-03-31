@@ -11,6 +11,7 @@ import com.metro.impl.Station;
 import com.metro.impl.XingStation;
 import com.metro.interfacer.StationI;
 import com.metro.utils.PropertyHelper;
+import com.metro.main.CalculateCost;
 
 public class Flow {
 	
@@ -18,7 +19,7 @@ public class Flow {
 	StationI destination;
 	int distance = 0;
 	double cost = 10;
-	
+	CalculateCost cc = null;
 	
 	
 	public Flow()
@@ -26,6 +27,7 @@ public class Flow {
 		this.source = getStation("Source");
 		this.destination = getStation("Destination");
 		//sc.close();
+		cc = new CalculateCost();
 		compute();
 	}
 	
@@ -58,7 +60,7 @@ public class Flow {
 		{
 			distance += getDistance(source, destination);
 			if(distance>3){
-				cost += calCost(source, distance-3);
+				cost += cc.calCost(source, distance-3);
 			} else {
 				cost = 10;
 			}
@@ -90,7 +92,7 @@ public class Flow {
 				StationI xDest = ((X.getSudoName(0).getStationLine()==nonX.getStationLine())?X.getSudoName(0):X.getSudoName(1));
 				distance += getDistance(nonX, xDest);
 				if(distance>3){
-					cost += calCost(nonX, distance-3);
+					cost += cc.calCost(nonX, distance-3);
 				}
 				else {
 					cost = 10;
@@ -123,7 +125,7 @@ public class Flow {
 			
 			distance += getDistance(src, dst);
 			if(distance>3){
-				cost += calCost(src, distance-3);
+				cost += cc.calCost(src, distance-3);
 			} else {
 				cost = 10;
 			}
@@ -157,28 +159,28 @@ public class Flow {
 			//cost += calCost(source, distance-3);
 			distance +=getDistance(vrs, destination);
 			if((distance-tempDistance)>2)
-				cost += calCost(vrs, (distance-tempDistance-2));
+				cost += cc.calCost(vrs, (distance-tempDistance-2));
 			else 
 				cost = 10;
 			break;
 		case 2:
 			distance +=getDistance(vrs, destination);
 			if((distance-tempDistance)>1)
-				cost += calCost(vrs, (distance-tempDistance-1));
+				cost += cc.calCost(vrs, (distance-tempDistance-1));
 			else 
 				cost = 10;
 			break;
 		case 3:
 			distance +=getDistance(vrs, destination);
 			if((distance-tempDistance)>0)
-				cost += calCost(vrs, (distance-tempDistance-0));
+				cost += cc.calCost(vrs, (distance-tempDistance-0));
 			else 
 				cost = 10;
 			break;
 		default:
-			cost += calCost(source, distance-3);
+			cost += cc.calCost(source, distance-3);
 			distance +=getDistance(vrs, destination);
-			cost += calCost(vrs, distance-tempDistance);
+			cost += cc.calCost(vrs, distance-tempDistance);
 		}
 		
 		
@@ -188,19 +190,5 @@ public class Flow {
 		int sourceValue = Integer.parseInt(source.getStationCode().substring(1));
 		int destinationValue = Integer.parseInt(destination.getStationCode().substring(1));
 		return Math.abs(sourceValue-destinationValue);
-	}
-	public double calCost(StationI source, int distance)
-	{
-		switch (source.getStationLine())
-		{
-		case 'A':
-			return distance*2.5;
-		case 'B':
-			return distance*2.0;
-		case 'C':
-			return distance*3.0;
-		default:
-			return 0.0;
-		}
 	}
 }
