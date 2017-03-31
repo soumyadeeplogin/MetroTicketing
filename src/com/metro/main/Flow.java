@@ -40,14 +40,19 @@ public class Flow {
 		if (sc.hasNext()) {
 			code = sc.next();
 		}
-		if(code.length()==2){
+		if(!code.matches("^[A-Z]{1}\\d{2}") && !code.matches("^[A-Z]{1}\\d{1}"))
+		{
+			System.out.println("Invalid input");
+			System.exit(0);
+		} 
+		/*if(code.length()==2){
 			
 		} else if(code.length()==3) {
 			
 		} else {
 			System.out.println("Invalid input");
 			System.exit(0);
-		}
+		}*/
 		if (code.charAt(0) == 'X')
 			si = new XingStation(code);
 		else
