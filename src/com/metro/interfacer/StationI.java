@@ -3,8 +3,6 @@
  */
 package com.metro.interfacer;
 
-import java.util.List;
-
 /**
  * @author Soumyadeep
  *

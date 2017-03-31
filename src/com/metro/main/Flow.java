@@ -34,6 +34,7 @@ public class Flow {
 		StationI si;
 		String code = null;
 		System.out.println("Enter " + type + " Station Code:");
+		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(System.in);
 
 		if (sc.hasNext()) {
