@@ -64,20 +64,14 @@ public class PropertyHelper {
 			value = prop.getProperty(key);
 		}  catch (IOException ex) {
 			//ex.printStackTrace();
+			System.out.println("(uninitialized) - Please initialize the properties file");
+			System.exit(0);
 			
 		} catch (NullPointerException ex) {
 			//ex.printStackTrace();
-			
+			System.out.println("(undefined) - Please define the station name");
+			System.exit(0);
 		}
-		/*finally {
-			if (input != null) {
-				try {
-					//input.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}*/
 		return value;
 	}
 }
